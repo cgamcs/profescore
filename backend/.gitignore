@@ -1,0 +1,9 @@
+.env
+node_modules
+package-lock
+
+dist
+excel-to-array.js
+materias.json
+importar-materias.ts
+importar-maestros.ts

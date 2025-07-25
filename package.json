@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "remove-accents": "^0.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.29"
+  }
+}

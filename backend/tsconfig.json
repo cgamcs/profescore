@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "lib": ["esnext"],
+        "target": "ESNext",
+        "moduleResolution": "NodeNext",
+        "module": "NodeNext",
+        "strict": false,
+        "noImplicitAny": false,
+        "strictNullChecks": false,
+        "useUnknownInCatchVariables": false,
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "declaration": true,
+        "types": ["express", "node"]
+    },
+    "include": ["src/**/*.ts"]
+}
