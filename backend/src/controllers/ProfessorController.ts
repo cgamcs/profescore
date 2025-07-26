@@ -5,6 +5,7 @@ import Faculty from '../models/Faculty';
 import Professor from '../models/Professor';
 import Subject from '../models/Subject';
 import Rating from '../models/Rating';
+import cache from '../utils/simpleCache';
 
 export class ProfessorController {
     static createProfessor = async (req: Request, res: Response) => {
@@ -213,7 +214,14 @@ export class ProfessorController {
 
     static getFacultyProfessors = async (req: Request, res: Response) => {
         try {
-            const professors = await Professor.find({ faculty: req.faculty.id });
+            const cacheKey = `facultyProfessors:${req.faculty.id}`;
+            let professors = cache.get<any[]>(cacheKey);
+
+            if (!professors) {
+                professors = await Professor.find({ faculty: req.faculty.id });
+                cache.set(cacheKey, professors, 600);
+            }
+
             res.json(professors);
         } catch (error) {
             res.status(500).json({ error: 'Hubo un error al mostrar profesores' });

@@ -5,6 +5,14 @@ import { SubjectPageLoader } from '../layouts/SkeletonLoader';
 import AddSubjectModal from '../components/AddSubjectModal';
 import api from '../api';
 import useViewTransition from '../layouts/useViewTransition';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../components/ui/table";
 
 interface ISubject {
   _id: string;
@@ -125,61 +133,60 @@ useEffect(() => {
       </div>
 
       {/* Lista de materias y profesores con altura fija durante transiciones */}
-      <div 
+      <div
         ref={subjectsContainerRef}
-        className="bg-white dark:bg-[#202024] rounded-lg border border-gray-200 dark:border-[#202024] shadow-sm overflow-hidden transition-all"
-        style={{ 
+        className="border border-gray-200 dark:border-[#383939] rounded-lg overflow-hidden transition-all"
+        style={{
           minHeight: containerHeight ? `${containerHeight}px` : '300px'
         }}
       >
-        <ul className="divide-y divide-gray-200 dark:divide-[#383939]">
-          {/* Mostrar materias filtradas */}
-          {filteredSubjects.map((subject: ISubject) => (
-            <li key={subject._id}>
-              <a 
-                href={`/facultad/${facultyId}/materia/${subject._id}`}
-                onClick={(e) => handleLinkClick(`/facultad/${facultyId}/materia/${subject._id}`, e)} 
-                className="block hover:bg-gray-50 dark:hover:bg-[#ffffff0d] p-4"
-              >
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h3 className="text-lg font-medium text-indigo-600 dark:text-indigo-400">{subject.name}</h3>
-                  </div>
-                  <div className="text-sm text-gray-500 dark:text-[#979797]">
-                    {subject.professors.length} profesor{subject.professors.length !== 1 && 'es'}
-                  </div>
-                </div>
-              </a>
-            </li>
-          ))}
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Nombre</TableHead>
+              <TableHead>Detalles</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredSubjects.map((subject: ISubject) => (
+              <TableRow key={subject._id}>
+                <TableCell>
+                  <a
+                    href={`/facultad/${facultyId}/materia/${subject._id}`}
+                    onClick={(e) => handleLinkClick(`/facultad/${facultyId}/materia/${subject._id}`, e)}
+                    className="text-indigo-600 dark:text-white font-medium"
+                  >
+                    {subject.name}
+                  </a>
+                </TableCell>
+                <TableCell>{subject.professors.length} profesor{subject.professors.length !== 1 && 'es'}</TableCell>
+              </TableRow>
+            ))}
 
-          {/* Mostrar profesores filtrados si la búsqueda coincide con ellos */}
-          {filteredProfessors.map((professor: IProfessor) => (
-            <li key={professor._id}>
-              <a 
-                href={`/facultad/${facultyId}/profesor/${professor._id}`}
-                onClick={(e) => handleLinkClick(`/facultad/${facultyId}/profesor/${professor._id}`, e)} 
-                className="block hover:bg-gray-50 dark:hover:bg-[#ffffff0d] p-4"
-              >
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h3 className="text-lg font-medium text-indigo-600 dark:text-indigo-400">{professor.name}</h3>
-                  </div>
-                  <div className="text-sm text-gray-500 dark:text-[#979797]">
-                    {professor.ratingStats.totalRatings} reseña{professor.ratingStats.totalRatings !== 1 && 's'}
-                  </div>
-                </div>
-              </a>
-            </li>
-          ))}
+            {filteredProfessors.map((professor: IProfessor) => (
+              <TableRow key={professor._id}>
+                <TableCell>
+                  <a
+                    href={`/facultad/${facultyId}/profesor/${professor._id}`}
+                    onClick={(e) => handleLinkClick(`/facultad/${facultyId}/profesor/${professor._id}`, e)}
+                    className="text-indigo-600 dark:text-white font-medium"
+                  >
+                    {professor.name}
+                  </a>
+                </TableCell>
+                <TableCell>{professor.ratingStats.totalRatings} reseña{professor.ratingStats.totalRatings !== 1 && 's'}</TableCell>
+              </TableRow>
+            ))}
 
-          {/* Mostrar mensaje si no hay resultados */}
-          {filteredSubjects.length === 0 && filteredProfessors.length === 0 && (
-            <li className="p-4 text-center text-gray-500 dark:text-[#979797]">
-              No se encontraron resultados para "{searchQuery}"
-            </li>
-          )}
-        </ul>
+            {filteredSubjects.length === 0 && filteredProfessors.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={2} className="text-center">
+                  No se encontraron resultados para "{searchQuery}"
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
       </div>
 
       {isModalOpen && facultyId && (

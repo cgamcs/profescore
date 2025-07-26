@@ -7,6 +7,7 @@ import ActivityLog from '../models/ActivityLog';
 import colors from 'colors';
 import Subject from '../models/Subject';
 import Rating from '../models/Rating';
+import cache from '../utils/simpleCache';
 
 declare module 'express' {
     interface Request {
@@ -47,8 +48,13 @@ export class FacultyController {
 
     static getHomeData = async (req: Request, res: Response) => {
         try {
+            const cached = cache.get<{ faculties: IFaculty[]; topProfessors: any[] }>('homeData');
+            if (cached) {
+                return res.json(cached);
+            }
+
             const faculties = await Faculty.find({});
-    
+
             const topProfessors = await Professor.aggregate([
                 // Etapa 1: Filtrar profesores que tienen al menos una reseña
                 { $match: { 'ratingStats.totalRatings': { $gt: 0 } } },
@@ -143,7 +149,9 @@ export class FacultyController {
                 }
             ]);
     
-            res.json({ faculties, topProfessors });
+            const result = { faculties, topProfessors };
+            cache.set('homeData', result, 600);
+            res.json(result);
         } catch (error) {
             console.log(colors.red.bold(`Error al obtener datos de la página de inicio - ${error.message}`));
             res.status(500).json({ message: "Error al obtener datos de la página de inicio" });
