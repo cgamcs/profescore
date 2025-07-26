@@ -7,10 +7,9 @@ const FacultyListLoader = () => {
                     <div className="bg-gray-200 dark:bg-[#383939] h-8 w-1/2 mx-auto rounded-lg animate-pulse mb-2"></div>
                     <div className="bg-gray-200 dark:bg-[#383939] h-4 w-1/3 mx-auto rounded-lg animate-pulse"></div>
                 </div>
-                <div className="border border-gray-200 dark:border-[#383939] rounded-lg overflow-hidden max-w-3xl mx-auto">
-                    <div className="bg-gray-50 dark:bg-indigo-600 h-10"></div>
-                    {[...Array(6)].map((_, i) => (
-                        <div key={i} className="h-12 border-b border-gray-200 dark:border-[#383939] bg-gray-200 dark:bg-[#202024] animate-pulse"></div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    {[...Array(8)].map((_, i) => (
+                        <div key={i} className="bg-gray-200 dark:bg-[#202024] border border-gray-200 dark:border-[#202024] rounded-lg p-4 h-25 text-center animate-pulse"></div>
                     ))}
                 </div>
             </div>

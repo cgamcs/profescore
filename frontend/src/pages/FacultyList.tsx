@@ -4,14 +4,6 @@ import { Link } from 'react-router-dom';
 import { FacultyListLoader } from '../layouts/SkeletonLoader';
 import api from '../api';
 import useViewTransition from '../layouts/useViewTransition';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../components/ui/table";
 
 const FacultyList: React.FC = () => {
   const { handleLinkClick } = useViewTransition();
@@ -32,31 +24,18 @@ const FacultyList: React.FC = () => {
           <p className="text-gray-600 dark:text-[#d4d3d3]">Selecciona tu facultad</p>
         </div>
 
-        <div className="border border-gray-200 dark:border-[#383939] rounded-lg overflow-hidden max-w-3xl mx-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Nombre</TableHead>
-                <TableHead>Abreviatura</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {Array.isArray(faculties) && faculties.map((faculty) => (
-                <TableRow key={faculty._id}>
-                  <TableCell>
-                    <Link
-                      to={`/facultad/${faculty._id}`}
-                      onClick={(e) => handleLinkClick(`/facultad/${faculty._id}`, e)}
-                      className="text-indigo-600 dark:text-white font-medium"
-                    >
-                      {faculty.name}
-                    </Link>
-                  </TableCell>
-                  <TableCell>{faculty.abbreviation}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          {Array.isArray(faculties) && faculties.map((faculty) => (
+            <Link
+              key={faculty._id}
+              to={`/facultad/${faculty._id}`}
+              onClick={(e) => handleLinkClick(`/facultad/${faculty._id}`, e)}
+              className="bg-white dark:bg-[#202024] border border-gray-200 dark:border-[#202024] rounded-lg p-4 text-center hover:bg-indigo-600 hover:text-white dark:hover:border-indigo-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              <h3 className="dark:text-white font-bold text-lg mb-1">{faculty.abbreviation}</h3>
+              <p className="dark:text-white text-xs opacity-80 line-clamp-2">{faculty.name}</p>
+            </Link>
+          ))}
         </div>
       </div>
     </section>
