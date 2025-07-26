@@ -4,6 +4,7 @@ import Professor from '../models/Professor';
 import Rating from '../models/Rating';
 import Department from '../models/Department';
 import Faculty from '../models/Faculty';
+import cache from '../utils/simpleCache';
 
 // Función para eliminar acentos y convertir a minúsculas
 const normalizeName = (name: string): string => {
@@ -89,9 +90,15 @@ export class SubjectController {
 
     static getFacultySubjects = async (req: Request, res: Response) => {
         try {
-            const subjects = await Subject.find({ faculty: req.params.facultyId })
-                .populate('department', 'name') // Ahora funcionará
-                .populate('professors', 'name');
+            const cacheKey = `facultySubjects:${req.params.facultyId}`;
+            let subjects = cache.get<any[]>(cacheKey);
+
+            if (!subjects) {
+                subjects = await Subject.find({ faculty: req.params.facultyId })
+                    .populate('department', 'name')
+                    .populate('professors', 'name');
+                cache.set(cacheKey, subjects, 600);
+            }
 
             res.json(subjects);
         } catch (error) {

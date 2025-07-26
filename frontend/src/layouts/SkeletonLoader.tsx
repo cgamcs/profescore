@@ -7,9 +7,10 @@ const FacultyListLoader = () => {
                     <div className="bg-gray-200 dark:bg-[#383939] h-8 w-1/2 mx-auto rounded-lg animate-pulse mb-2"></div>
                     <div className="bg-gray-200 dark:bg-[#383939] h-4 w-1/3 mx-auto rounded-lg animate-pulse"></div>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-                    {[...Array(8)].map((_, i) => (
-                        <div key={i} className="bg-gray-200 dark:bg-[#202024] border border-gray-200 dark:border-[#202024] rounded-lg p-4 h-25 text-center animate-pulse"></div>
+                <div className="border border-gray-200 dark:border-[#383939] rounded-lg overflow-hidden max-w-3xl mx-auto">
+                    <div className="bg-gray-50 dark:bg-indigo-600 h-10"></div>
+                    {[...Array(6)].map((_, i) => (
+                        <div key={i} className="h-12 border-b border-gray-200 dark:border-[#383939] bg-gray-200 dark:bg-[#202024] animate-pulse"></div>
                     ))}
                 </div>
             </div>
@@ -138,23 +139,11 @@ const SubjectPageLoader = () => {
                 <div className="bg-gray-200 dark:bg-[#383939] h-12 w-full rounded-xl animate-pulse"></div>
             </div>
 
-            {/* Lista de materias y profesores */}
-            <div className="bg-white dark:bg-[#202024] rounded-lg border border-gray-200 dark:border-[#202024] shadow-sm overflow-hidden">
-                <ul className="divide-y divide-gray-200 dark:divide-[#383939]">
-                    {[...Array(5)].map((_, i) => (
-                        <li key={i}>
-                            <div className="block hover:bg-gray-50 dark:hover:bg-[#ffffff0d] p-4">
-                                <div className="flex justify-between items-center">
-                                    <div>
-                                        <div className="bg-gray-200 dark:bg-[#383939] h-6 w-40 rounded-md animate-pulse"></div>
-                                        <div className="bg-gray-200 dark:bg-[#383939] h-4 w-24 rounded-md animate-pulse mt-2"></div>
-                                    </div>
-                                    <div className="bg-gray-200 dark:bg-[#383939] h-4 w-16 rounded-md animate-pulse"></div>
-                                </div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+            <div className="border border-gray-200 dark:border-[#383939] rounded-lg overflow-hidden">
+                <div className="bg-gray-50 dark:bg-indigo-600 h-10"></div>
+                {[...Array(5)].map((_, i) => (
+                    <div key={i} className="h-12 border-b border-gray-200 dark:border-[#383939] bg-gray-200 dark:bg-[#202024] animate-pulse"></div>
+                ))}
             </div>
         </main>
     );
